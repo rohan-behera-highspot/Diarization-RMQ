@@ -4,14 +4,13 @@ import os
 import wave
 import uuid
 import pika
-import openai
+import whisper
 import ffmpeg
 import datetime
 from pyannote.audio import Pipeline
 from pyannote.audio.pipelines.utils.hook import ProgressHook
 
-# API Keys
-openai.api_key = "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"  # Your OpenAI key
+
 pipeline = Pipeline.from_pretrained(
     "pyannote/speaker-diarization-3.1",
     use_auth_token="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"  # Your Hugging Face token
@@ -26,6 +25,7 @@ FRAME_RATE = 44100
 TRANSCRIPT_FILE = f"transcript_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
 TEMP_AUDIO = "temp_audio.wav"
 TEMP_SEGMENT = "temp_segment.wav"
+whisper_model = whisper.load_model("base") 
 
 def save_wav(data_bytes, path):
     with wave.open(path, 'wb') as wf:
@@ -50,7 +50,7 @@ def diarize_and_transcribe(wav_path):
             continue
 
         with open(TEMP_SEGMENT, "rb") as audio_file:
-            result = openai.Audio.transcribe(model="whisper-1", file=audio_file)
+            result = whisper_model.transcribe(TEMP_SEGMENT)
 
         transcripts.append({
             "speaker": speaker,

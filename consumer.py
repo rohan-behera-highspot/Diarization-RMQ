@@ -9,14 +9,12 @@ import ffmpeg
 import datetime
 from pyannote.audio import Pipeline
 from pyannote.audio.pipelines.utils.hook import ProgressHook
-from dotenv import load_dotenv
-load_dotenv()
 
 # API Keys
-openai.api_key = os.getenv("OPENAI_API_KEY")  # Your OpenAI key
+openai.api_key = "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"  # Your OpenAI key
 pipeline = Pipeline.from_pretrained(
     "pyannote/speaker-diarization-3.1",
-    use_auth_token=os.getenv("HUGGINGFACE_TOKEN") # Your Hugging Face token
+    use_auth_token="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"  # Your Hugging Face token
 )
 
 RABBIT_URL = 'amqp://localhost'

@@ -10,10 +10,12 @@ import datetime
 from pyannote.audio import Pipeline
 from pyannote.audio.pipelines.utils.hook import ProgressHook
 
+HUGGINGFACE_TOKEN = os.getenv('HUGGINGFACE_TOKEN')
+
 
 pipeline = Pipeline.from_pretrained(
     "pyannote/speaker-diarization-3.1",
-    use_auth_token="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"  # Your Hugging Face token
+    use_auth_token=HUGGINGFACE_TOKEN  # Your Hugging Face token
 )
 
 RABBIT_URL = 'amqp://localhost'
